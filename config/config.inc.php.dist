@@ -1,0 +1,22 @@
+<?php
+
+/* google_analytics ID */
+$rcmail_config['google_analytics_id'] = 'UA-2334121-3';
+
+/* google_analytics domain tracker */
+$rcmail_config['google_analytics_tracker'] = '.mail4us.net';
+
+/* exclude the following templates */
+$rcmail_config['google_analytics_exclude'] = array(
+  "message",
+  "messagepreview",
+  "compose",
+  "editidentity",
+  "editcontact", 
+  "showcontact"
+);
+
+/* exclude private pages */
+$rcmail_config['google_analytics_privacy'] = FALSE;
+
+?>
