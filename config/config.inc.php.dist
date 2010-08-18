@@ -3,8 +3,14 @@
 /* google_analytics ID */
 $rcmail_config['google_analytics_id'] = 'UA-2334121-3';
 
-/* google_analytics domain tracker */
-$rcmail_config['google_analytics_tracker'] = '.mail4us.net';
+/* async or sync mode, default is async */
+$rcmail_config['google_analytics_async'] = TRUE;
+
+/* google_analytics domain tracker. Set to empty string if you want disable (default). */
+$rcmail_config['google_analytics_domain'] = '';
+
+/* exclude private pages - analytics will works only for non-logged users */
+$rcmail_config['google_analytics_privacy'] = FALSE;
 
 /* exclude the following templates */
 $rcmail_config['google_analytics_exclude'] = array(
@@ -16,7 +22,26 @@ $rcmail_config['google_analytics_exclude'] = array(
   "showcontact"
 );
 
-/* exclude private pages */
-$rcmail_config['google_analytics_privacy'] = FALSE;
+//  Possible templates:
+
+//  "message",
+//  "messagepart",
+//  "messagepreview",
+//  "messageerror",
+//  "showcontact",
+//  "addcontact",
+//  "editcontact",
+//  "importcontacts",
+//  "addressbook",
+//  "compose",
+//  "editidentity",
+//  "error",
+//  "identities",
+//  "login",
+//  "mail",
+//  "managefolders",
+//  "plugin",
+//  "settingsedit",
+//  "settings",
 
 ?>

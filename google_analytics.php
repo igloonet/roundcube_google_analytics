@@ -5,17 +5,17 @@
  *
  * Bind google analytics script
  *
- * @version 1.0 - 24.11.2009
+ * @version 1.1 - 18. 8. 2010
  * @author Roland 'rosali' Liebl
- * @website http://myroundcube.googlecode.com
+ * @modified_by Ondra 'Kepi' Kudlík
+ * @website http://github.com/igloonet/roundcube_google_analytics
  * @licence GNU GPL
  *
- **/
-
-/**
- * Usage: http://mail4us.net/myroundcube/
+ * ChangeLog
  *
- **/ 
+ *    1.1 - added support for async mode and empty tracker domain
+ *
+ **/
 
 class google_analytics extends rcube_plugin
 {
@@ -38,8 +38,41 @@ class google_analytics extends rcube_plugin
       if(!empty($_SESSION['user_id']));
         return $args;
     }
-    
-    $script = '
+
+    $google_analytics_domain = $rcmail->config->get('google_analytics_domain');
+    $set_domain_name = '';
+
+    // async mode 
+    if($rcmail->config->get('google_analytics_async')){
+      // set domain if not empty
+      if ( !Empty($google_analytics_domain) )
+        $set_domain_name = "  _gaq.push(['_setDomainName', '" . $rcmail->config->get('google_analytics_domain') . "']);";
+
+      $script = "
+<script type=\"text/javascript\">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '" . $rcmail->config->get('google_analytics_id') . "']);
+  _gaq.push(['_setDomainName', '" . $rcmail->config->get('google_analytics_domain') . "']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+";
+      // async mode add script to head of page
+      $rcmail->output->add_header($script);
+
+    // sync mode
+    } else {
+      // set domain if not empty
+      if ( !Empty($google_analytics_domain) )
+        $set_domain_name = 'pageTracker._setDomainName("' . $rcmail->config->get('google_analytics_domain') . '");';
+
+      $script = '
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
@@ -47,12 +80,14 @@ document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga
 <script type="text/javascript">
 try {
 var pageTracker = _gat._getTracker("' . $rcmail->config->get('google_analytics_id') . '");
-pageTracker._setDomainName("' . $rcmail->config->get('google_analytics_tracker') . '");
+' . $set_domain_name . '
 pageTracker._trackPageview();
 } catch(err) {}</script>    
     ';
     
-    $rcmail->output->add_footer($script);
+      // sync mode add script to end of page
+      $rcmail->output->add_footer($script);
+    }
      
     return $args;
   }
