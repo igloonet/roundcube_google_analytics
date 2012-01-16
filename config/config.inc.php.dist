@@ -1,7 +1,7 @@
 <?php
 
 /* google_analytics ID */
-$rcmail_config['google_analytics_id'] = 'UA-2334121-3';
+$rcmail_config['google_analytics_id'] = 'UA-XXXXXXX-X';
 
 /* async or sync mode, default is async */
 $rcmail_config['google_analytics_async'] = TRUE;
@@ -12,36 +12,44 @@ $rcmail_config['google_analytics_domain'] = '';
 /* exclude private pages - analytics will works only for non-logged users */
 $rcmail_config['google_analytics_privacy'] = FALSE;
 
-/* exclude the following templates */
+/* default is use EXCLUDE array to specify allowed templates */
+$rcmail_config['google_analytics_excluding'] = TRUE;
+
+/* include following templates */
+$rcmail_config['google_analytics_include'] = array(
+  'login'
+);
+
+/* exclude following templates */
 $rcmail_config['google_analytics_exclude'] = array(
-  "message",
-  "messagepreview",
-  "compose",
-  "editidentity",
-  "editcontact", 
-  "showcontact"
+  'message',
+  'messagepreview',
+  'compose',
+  'editidentity',
+  'editcontact',
+  'showcontact'
 );
 
 //  Possible templates:
 
-//  "message",
-//  "messagepart",
-//  "messagepreview",
-//  "messageerror",
-//  "showcontact",
-//  "addcontact",
-//  "editcontact",
-//  "importcontacts",
-//  "addressbook",
-//  "compose",
-//  "editidentity",
-//  "error",
-//  "identities",
-//  "login",
-//  "mail",
-//  "managefolders",
-//  "plugin",
-//  "settingsedit",
-//  "settings",
+//  'message',
+//  'messagepart',
+//  'messagepreview',
+//  'messageerror',
+//  'showcontact',
+//  'addcontact',
+//  'editcontact',
+//  'importcontacts',
+//  'addressbook',
+//  'compose',
+//  'editidentity',
+//  'error',
+//  'identities',
+//  'login',
+//  'mail',
+//  'managefolders',
+//  'plugin',
+//  'settingsedit',
+//  'settings',
 
 ?>
